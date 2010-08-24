@@ -2,7 +2,7 @@ ROOT = File.expand_path File.dirname(__FILE__)
 
 require 'jasmine'
 require 'mustache'
-require 'yui/compressor'
+require 'closure-compiler'
 
 load 'jasmine/tasks/jasmine.rake'
 
@@ -59,7 +59,7 @@ HTML
 desc 'Build the minified JS and HTML files into /dist'
 task :build do
   js = File.read "#{ ROOT }/lib/same_as_last.js"
-  minified_js = YUI::JavaScriptCompressor.new(:munge => true).compress js
+  minified_js = Closure::Compiler.new.compile js
   puts "\n"
   
   file_path = "#{ ROOT }/dist/same_as_last.js"
