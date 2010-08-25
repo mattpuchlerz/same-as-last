@@ -56,20 +56,20 @@ HTML
 
 
 
-desc 'Build the minified JS and HTML files into /dist'
+desc 'Build the minified JS and HTML files into /build'
 task :build do
   js = File.read "#{ ROOT }/lib/same_as_last.js"
   minified_js = Closure::Compiler.new.compile js
   puts "\n"
   
-  file_path = "#{ ROOT }/dist/same_as_last.js"
+  file_path = "#{ ROOT }/build/same_as_last.js"
   File.write file_path, minified_js
   file_size  = File.size file_path
   precentage = file_size > 1024 ? 'OVER!' : "#{ (file_size / 1024.0 * 100).to_i }%"
   done "Built the minified JS file. ( #{ file_size } bytes | #{ precentage } )"
   
   rendered_template = Mustache.render @template, :the_script => minified_js
-  File.write "#{ ROOT }/dist/index.html", rendered_template
+  File.write "#{ ROOT }/build/index.html", rendered_template
   done "Built the HTML file." 
 end
 
